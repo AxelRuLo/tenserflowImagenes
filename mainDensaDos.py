@@ -1,3 +1,4 @@
+
 import numpy as np
 import tensorflow as tf
 import os
@@ -5,8 +6,9 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 
 
+# INCIA LA LECTURA DE LAS IMAGENES Y EL DATASET DESCARGAOD DE INTERNET
+def densa2(images, directories, dircount, prevRoot, cant):
 
-def densa1(images,directories,dircount,prevRoot,cant):
     labels = []
     indice = 0
     for cantidad in dircount:
@@ -15,7 +17,6 @@ def densa1(images,directories,dircount,prevRoot,cant):
         indice = indice + 1
 
     print("Cantidad etiquetas creadas: ", len(labels))
-
 
     deportes = []
     indice = 0
@@ -41,7 +42,6 @@ def densa1(images,directories,dircount,prevRoot,cant):
     print("numero de clases : ", nClasses)
     print("clases: ", classes)
 
-
     # Mezclar todo y crear los grupos de entrenamiento y testing
     train_X, test_X, train_Y, test_Y = train_test_split(X, y, test_size=0.1)
 
@@ -64,7 +64,6 @@ def densa1(images,directories,dircount,prevRoot,cant):
     train_Y_one_hot = to_categorical(train_Y)
     print(f"conversion x a categorical: {train_Y_one_hot.shape}")
 
-
     print(train_X.shape, test_Y.shape)
 
     # # tasa de aprendizaje
@@ -76,20 +75,22 @@ def densa1(images,directories,dircount,prevRoot,cant):
             tf.keras.layers.Flatten(input_shape=(21, 28, 3)),
             tf.keras.layers.Dense(50, activation=tf.nn.relu),
             tf.keras.layers.Dense(50, activation=tf.nn.relu),
+            tf.keras.layers.Dense(50, activation=tf.nn.relu),
+            tf.keras.layers.Dense(50, activation=tf.nn.relu),
             tf.keras.layers.Dense(10, activation=tf.nn.softmax),
         ]
     )
-
 
     model.compile(
         optimizer=tf.keras.optimizers.Adagrad(
             lr=INIT_LR, epsilon=None, decay=INIT_LR / 100
         ),
         metrics=["accuracy"],
-        loss='categorical_crossentropy',
+        loss="categorical_crossentropy",
     )
     # #
     # # Train the perceptron using stochastic gradient descent
     # # with a validation split of 20%
-    historial = model.fit(train_X, train_Y_one_hot, batch_size=64,epochs=10,verbose=1)
-    return (historial.history["loss"])
+    historial = model.fit(train_X, train_Y_one_hot, batch_size=64, epochs=10, verbose=1)
+
+    return historial.history["loss"]
