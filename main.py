@@ -37,14 +37,14 @@ dircount[0] = dircount[0] + 1
 
 densa1 = mainDensa.densa1(images,directories,dircount,prevRoot,cant)
 densa2 = mainDensaDos.densa2(images,directories,dircount,prevRoot,cant)
-# convolucional = mainConvulucional.convolucionar(images,directories,dircount,prevRoot,cant)
+convolucional = mainConvulucional.convolucionar(images,directories,dircount,prevRoot,cant)
 
-arrayResultados = [densa1,densa2]
+arrayResultados = [densa1,densa2,convolucional]
 
 plt.xlabel("epoch")
 plt.ylabel("error")
 plt.plot(arrayResultados[0],color="blue",)
 plt.plot(arrayResultados[1],color="green",)
-plt.plot(arrayResultados[2],label = 'Label 3',color="red")
+plt.plot(arrayResultados[2],color="red")
 plt.legend(["modelado densa 4 capas","modelado densa 6 capas","modelado convolucional"]) 
 plt.show()
